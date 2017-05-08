@@ -677,8 +677,10 @@ def TranslateAccuracy(layer, pretrained_blobs, is_test, **kwargs):
 @TranslatorRegistry.Register("Concat")
 def TranslateConcat(layer, pretrained_blobs, is_test, **kwargs):
     caffe_op = BaseTranslate(layer, "Concat")
+    param = layer.concat_param
     caffe_op.output.extend(['_' + caffe_op.output[0] + '_dims'])
-    AddArgument(caffe_op, "order", "NCHW")
+    #AddArgument(caffe_op, "order", "NCHW")
+    AddArgument(caffe_op, "axis", param.axis)
     return caffe_op, []
 
 
